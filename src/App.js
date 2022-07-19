@@ -13,12 +13,14 @@ function App() {
   }, [])
 
   // helpers
+  // intializes the game and increments every1.5 secs
   function startGame() {
     setInterval(() => {
       setDens(getDensState())
     }, 1500)
   }
 
+  // the function that alternates the mole images 
   function getDensState() {
     return new Array(9).fill({}).map(() => {
       return { 
@@ -27,14 +29,16 @@ function App() {
     })
   }
 
+  // point icrease when visible mole is hit 
   function onMoleWhacked() {
     setPoints(points + 1)
   }
 
   // renders
   const denElements = dens.map((den, index) => {
+
     return (
-      <Mole key={`mole-${index}`} />
+      <Mole key={`mole-${index}`} isMoleVisible={den.isMoleVisible} onMoleWhacked={onMoleWhacked}/>
     )
   })
 
@@ -42,6 +46,7 @@ function App() {
     <div className="App">
       <h1>WHACK-A-MOLE!</h1>
       <h2>Points: { points }</h2>
+
       <div className="dens">
         { denElements }
         <div style={{clear: 'both'}}></div>
